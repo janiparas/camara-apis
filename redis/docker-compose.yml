@@ -1,0 +1,46 @@
+services:
+
+  redis:
+    image: redis:7
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    command:
+      - redis-server
+      - --requirepass
+      - redis
+      - --appendonly
+      - yes
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "redis", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - camara-network
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: redis-commander
+    restart: always
+    ports:
+      - "8001:8081"
+    environment:
+      REDIS_HOSTS: "local:172.22.0.2:6379:0:redis"
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - camara-network
+
+networks:
+  camara-network:
+    external: true
+    name: camara-network
+
+volumes:
+  redis_data:

@@ -1,0 +1,19 @@
+services:
+ 
+  # 📱 Number Verification Service
+  number-verification:
+   # build: ./number-verification-service
+    image: number-verification-service:latest
+    container_name: number-verification
+    ports:
+      - "9091:9091"
+    env_file:
+      - .env
+    
+    restart: always
+    networks:
+      - camara-network
+networks:
+  camara-network:
+    external: true       
+

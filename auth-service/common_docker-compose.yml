@@ -1,0 +1,67 @@
+services:
+
+  redis:
+    image: redis:7
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    command:
+      - redis-server
+      - --requirepass
+      - redis
+      - --appendonly
+      - yes
+      - --bind
+      - 0.0.0.0
+      - --protected-mode
+      - no
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "redis", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - camara-network
+
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: redisinsight
+    restart: always
+    ports:
+      - "8001:5540"
+    depends_on:
+      - redis
+    networks:
+      - camara-network
+
+  auth-service:
+    image: auth-srv:v5
+    container_name: auth-service
+    ports:
+      - "3000:3000"
+    depends_on:
+      redis:
+        condition: service_healthy
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: redis
+      KEYCLOAK_URL: http://keycloak:8080
+      REALM: camara
+      CLIENT_ID: camara-client
+      CLIENT_SECRET: 3moBzALtj5PPcaAipIdhenOQMNmoRtiv
+      REDIRECT_URI: http://localhost:3000/callback
+    restart: always
+    networks:
+      - camara-network
+
+networks:
+  camara-network:
+    external: true
+
+volumes:
+  redis_data:

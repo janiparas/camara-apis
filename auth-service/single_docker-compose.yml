@@ -1,0 +1,27 @@
+services:
+  auth-service:
+    image: auth-srv:v9
+    container_name: auth-service
+    ports:
+      - "3000:3000"
+
+    environment:
+      REDIS_ENABLED: "true"
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: redis
+
+      KEYCLOAK_URL: http://keycloak:8080
+      KEYCLOAK_PUBLIC_URL: http://localhost:8080
+      REALM: camara
+      CLIENT_ID: camara-client
+      CLIENT_SECRET: qB7CzWGYO546oXpHGHceDK9dsoB3ecnR
+      REDIRECT_URI: http://localhost:3000/callback
+
+    restart: always
+    networks:
+      - camara-network
+
+networks:
+  camara-network:
+    external: true

@@ -1,0 +1,602 @@
+curl -X POST http://localhost:9091/verify \
+-H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI3d0hGN05xNXF1STZDMTR5d3ZZck5NaG11X3hnM2puY3oyMUwxclU0alNRIn0.eyJleHAiOjE3NzQ0NDM5MTksImlhdCI6MTc3NDQ0MzYxOSwiYXV0aF90aW1lIjoxNzc0NDQzNjE5LCJqdGkiOiJvbnJ0YWM6NDAzMGMwNzQtYmNmYy1lMmI1LTI2MTQtZDZlODcwYTY1NjZhIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9jYW1hcmEiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiZjBhNzk0NDItZWRkNy00NjhkLWFkMjAtYjViNTEyYTIwZTU4IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiY2FtYXJhLWNsaWVudCIsInNpZCI6IkJfUGwxODc0cDZTSWNyOFp3eGlrNFZIaiIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtY2FtYXJhIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsIm5hbWUiOiJQYXJhcyBqYW5pIiwicHJlZmVycmVkX3VzZXJuYW1lIjoicGFyYXMiLCJnaXZlbl9uYW1lIjoiUGFyYXMiLCJmYW1pbHlfbmFtZSI6ImphbmkiLCJlbWFpbCI6InBhcmFzLmphbmlAZWNvc21vYi5jb20ifQ.LWPXdBytzuZRJwbQIKlgAgVch_UZonvsBsIZz9N3OHUPPsXBTo97xbnUh2zYxTWV3y0IieVSUI5L_W3rVy1KfpeX5YEByLg1rvCQPe05gkMZkg4lChbeaixRj7L2n45KJ4layAndZGFKPNgjIZCGAPFStYH0-2yKBeJeiWsGeYkTiq2_lrCvkYchzqCIDjb8fomPX-bu1YnZLSBcqFwNY7B--ioS5h332VhlpnYgNBoJ9i8_COeLEeY5NMArIXLzgfUWFYNQo3uz5fkw001d4_NzFEEqLiq7znyT7VRzU-PrzsGYiCB9Qat_FyB-xtZUAvj4GCU4MtrNlS-jvgc9Mg" \
+-H "Content-Type: application/json" \
+-d '{
+  "phoneNumber": "+919876543210"
+}'
+
+
+curl http://localhost:9091/device-phone-number \
+-H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI3d0hGN05xNXF1STZDMTR5d3ZZck5NaG11X3hnM2puY3oyMUwxclU0alNRIn0.eyJleHAiOjE3NzQ0NDM5MTksImlhdCI6MTc3NDQ0MzYxOSwiYXV0aF90aW1lIjoxNzc0NDQzNjE5LCJqdGkiOiJvbnJ0YWM6NDAzMGMwNzQtYmNmYy1lMmI1LTI2MTQtZDZlODcwYTY1NjZhIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9jYW1hcmEiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiZjBhNzk0NDItZWRkNy00NjhkLWFkMjAtYjViNTEyYTIwZTU4IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiY2FtYXJhLWNsaWVudCIsInNpZCI6IkJfUGwxODc0cDZTSWNyOFp3eGlrNFZIaiIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtY2FtYXJhIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsIm5hbWUiOiJQYXJhcyBqYW5pIiwicHJlZmVycmVkX3VzZXJuYW1lIjoicGFyYXMiLCJnaXZlbl9uYW1lIjoiUGFyYXMiLCJmYW1pbHlfbmFtZSI6ImphbmkiLCJlbWFpbCI6InBhcmFzLmphbmlAZWNvc21vYi5jb20ifQ.LWPXdBytzuZRJwbQIKlgAgVch_UZonvsBsIZz9N3OHUPPsXBTo97xbnUh2zYxTWV3y0IieVSUI5L_W3rVy1KfpeX5YEByLg1rvCQPe05gkMZkg4lChbeaixRj7L2n45KJ4layAndZGFKPNgjIZCGAPFStYH0-2yKBeJeiWsGeYkTiq2_lrCvkYchzqCIDjb8fomPX-bu1YnZLSBcqFwNY7B--ioS5h332VhlpnYgNBoJ9i8_COeLEeY5NMArIXLzgfUWFYNQo3uz5fkw001d4_NzFEEqLiq7znyT7VRzU-PrzsGYiCB9Qat_FyB-xtZUAvj4GCU4MtrNlS-jvgc9Mg"
+
+
+services:
+
+  redis:
+    image: redis:7
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    command:
+      - redis-server
+      - --requirepass
+      - redis
+      - --appendonly
+      - yes
+      - --bind
+      - 0.0.0.0
+      - --protected-mode
+      - no
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "redis", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - camara-network
+
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: redisinsight
+    restart: always
+    ports:
+      - "8001:5540"
+    depends_on:
+      - redis
+    networks:
+      - camara-network
+
+  auth-service:
+    image: auth-srv:v4
+    container_name: auth-service
+    ports:
+      - "3000:3000"
+    depends_on:
+      redis:
+        condition: service_healthy
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: redis
+      KEYCLOAK_URL: http://keycloak:8080
+      REALM: camara
+      CLIENT_ID: camara-client
+      CLIENT_SECRET: 3moBzALtj5PPcaAipIdhenOQMNmoRtiv
+      REDIRECT_URI: http://localhost:3000/callback
+    restart: always
+    networks:
+      - camara-network
+
+networks:
+  camara-network:
+    external: true
+
+volumes:
+  redis_data:
+
+
+  Lets start from scratch, I am provide you running file for authserver.
+
+///lib/redis.js
+const Redis = require("ioredis");
+
+const REDIS_ENABLED = process.env.REDIS_ENABLED === "true";
+
+if (!REDIS_ENABLED) {
+  console.warn("[redis] disabled via REDIS_ENABLED=false — using no-op client");
+}
+
+// No-op client — mimics ioredis API but does nothing
+const noopClient = {
+  set:    async () => "OK",
+  get:    async () => null,
+  del:    async () => 0,
+  ping:   async () => "PONG",
+  on:     () => noopClient,
+  status: "noop",
+};
+
+if (!REDIS_ENABLED) {
+  module.exports = noopClient;
+} else {
+  const redis = new Redis({
+    host:     process.env.REDIS_HOST     || "redis",
+    port:     parseInt(process.env.REDIS_PORT || "6379"),
+    password: process.env.REDIS_PASSWORD || undefined,
+    maxRetriesPerRequest: 3,
+    retryStrategy(times) {
+      if (times > 10) {
+        console.error("[redis] max retries reached — giving up");
+        return null;
+      }
+      const delay = Math.min(times * 200, 3000);
+      console.warn(`[redis] retrying in ${delay}ms (attempt ${times})`);
+      return delay;
+    },
+    reconnectOnError(err) {
+      console.error("[redis] reconnect on error:", err.message);
+      return true;
+    }
+  });
+
+  redis.on("connect",     () => console.log("[redis] connected successfully"));
+  redis.on("ready",       () => console.log("[redis] ready"));
+  redis.on("error",       (err) => console.error("[redis] error:", err.message));
+  redis.on("close",       () => console.warn("[redis] connection closed"));
+  redis.on("reconnecting",() => console.warn("[redis] reconnecting..."));
+
+  module.exports = redis;
+}
+
+
+///src/routes/auth.js
+const { v4: uuidv4 } = require("uuid");
+const { storeSession } = require("../services/sessionService");
+const { exchangeAuthCode } = require("../services/keycloakService");
+const redis = require("../lib/redis");
+
+async function routes(fastify, options) {
+
+  /**
+   * STEP 1: Authorization request
+   * Telco injects MSISDN via x-msisdn header through Kong
+   */
+  fastify.get("/authorize", async (request, reply) => {
+  try {
+    const msisdn = request.headers["x-msisdn"];
+
+    if (!msisdn) {
+      return reply.code(400).send({
+        error: "missing_msisdn",
+        message: "x-msisdn header is required (injected by telco via Kong)"
+      });
+    }
+
+    const requestId = uuidv4();
+    console.log(`[authorize] requestId=${requestId} msisdn=${msisdn}`);
+    await storeSession(requestId, msisdn);
+
+    // KEYCLOAK_PUBLIC_URL  → browser-resolvable (localhost:8080)
+    // KEYCLOAK_URL         → internal Docker hostname (keycloak:8080)
+    const publicBase = process.env.KEYCLOAK_PUBLIC_URL || process.env.KEYCLOAK_URL;
+
+    const authUrl = [
+      `${publicBase}/realms/${process.env.REALM}`,
+      `/protocol/openid-connect/auth`,
+      `?client_id=${process.env.CLIENT_ID}`,
+      `&response_type=code`,
+      `&redirect_uri=${encodeURIComponent(process.env.REDIRECT_URI)}`,
+      `&scope=openid`,
+      `&state=${requestId}`,
+      `&prompt=login`
+    ].join("");
+
+    console.log(`[authorize] redirecting browser to: ${authUrl}`);
+    return reply.redirect(authUrl);
+
+  } catch (err) {
+    console.error("[authorize] error:", err.message);
+    return reply.code(500).send({ error: "internal_error", message: err.message });
+  }
+});
+
+  /**
+   * STEP 2: Token exchange (direct backend flow)
+   * Accepts msisdn in body so the token→MSISDN mapping
+   * is written to Redis — required for number verification (Flow 3)
+   */
+  fastify.post("/token", async (request, reply) => {
+    try {
+      const { code, redirect_uri, msisdn } = request.body;
+
+      if (!code) {
+        return reply.code(400).send({
+          error: "missing_code",
+          message: "code is required"
+        });
+      }
+
+      const resolvedRedirectUri = redirect_uri || process.env.REDIRECT_URI;
+
+      const tokenData = await exchangeAuthCode(code, resolvedRedirectUri);
+
+      // Write token → MSISDN mapping so Flow 3 (number verification) works
+      // for tokens issued via this direct /token route
+      if (msisdn && tokenData.access_token) {
+        await redis.set(
+          `token:${tokenData.access_token}`,
+          JSON.stringify({
+            msisdn,
+            createdAt: new Date().toISOString()
+          }),
+          "EX",
+          tokenData.expires_in || 300
+        );
+        console.log(`[token] mapped access_token to msisdn=${msisdn}`);
+      } else {
+        console.warn("[token] msisdn not provided — token→MSISDN mapping skipped");
+      }
+
+      return reply.send(tokenData);
+
+    } catch (err) {
+      console.error("[token] error:", err.response?.data || err.message);
+      return reply.code(500).send({
+        error: "token_exchange_failed",
+        message: err.response?.data || err.message
+      });
+    }
+  });
+}
+
+module.exports = routes;
+
+// src/routes/callback.js
+const redis = require("../lib/redis");
+const { getSession, deleteSession } = require("../services/sessionService");
+const { exchangeAuthCode } = require("../services/keycloakService");
+
+module.exports = async function (fastify, opts) {
+
+  /**
+   * OAuth callback — Keycloak redirects here after authentication
+   * Exchanges auth code for JWT, binds token → MSISDN in Redis
+   */
+  fastify.get("/callback", async (request, reply) => {
+    try {
+      const { code, state, error, error_description } = request.query;
+
+      // Handle Keycloak-side errors (e.g. user cancelled login)
+      if (error) {
+        console.error(`[callback] keycloak error: ${error} — ${error_description}`);
+        return reply.code(400).send({
+          error,
+          message: error_description || "Authorization failed"
+        });
+      }
+
+      if (!code || !state) {
+        return reply.code(400).send({
+          error: "missing_params",
+          message: "code and state are required"
+        });
+      }
+
+      console.log(`[callback] received code, state=${state}`);
+
+      // Retrieve MSISDN bound to this state
+      const session = await getSession(state);
+
+      if (!session) {
+        console.error(`[callback] session not found or expired for state=${state}`);
+        return reply.code(400).send({
+          error: "session_expired",
+          message: "Session expired or invalid state — restart the auth flow"
+        });
+      }
+
+      const { msisdn } = session;
+      console.log(`[callback] session found, msisdn=${msisdn}`);
+
+      // Exchange auth code for tokens via keycloakService (single source of truth)
+      const tokenData = await exchangeAuthCode(code, process.env.REDIRECT_URI);
+
+      console.log(`[callback] token exchange successful`);
+
+      // Bind access_token → MSISDN in Redis (consumed by number verification service)
+      await redis.set(
+        `token:${tokenData.access_token}`,
+        JSON.stringify({
+          msisdn,
+          createdAt: new Date().toISOString()
+        }),
+        "EX",
+        tokenData.expires_in || 300
+      );
+
+      console.log(`[callback] token→MSISDN mapped, msisdn=${msisdn}`);
+
+      // Clean up session — no longer needed
+      await deleteSession(state);
+      console.log(`[callback] session deleted, state=${state}`);
+
+      return reply.send({
+        access_token: tokenData.access_token,
+        refresh_token: tokenData.refresh_token,
+        expires_in: tokenData.expires_in,
+        token_type: tokenData.token_type || "Bearer",
+        msisdn
+      });
+
+    } catch (err) {
+      console.error("[callback] error:", err.response?.data || err.message);
+      return reply.code(500).send({
+        error: "callback_failed",
+        message: err.response?.data || err.message
+      });
+    }
+  });
+
+};
+
+// src/services/keycloakService.js
+const axios = require("axios");
+const { KEYCLOAK_URL, REALM, CLIENT_ID, CLIENT_SECRET } = require("../config");
+
+const tokenEndpoint = `${KEYCLOAK_URL}/realms/${REALM}/protocol/openid-connect/token`;
+
+async function exchangeAuthCode(code, redirectUri) {
+  const params = new URLSearchParams();
+  params.append("grant_type", "authorization_code");
+  params.append("client_id", CLIENT_ID);
+  params.append("client_secret", CLIENT_SECRET);
+  params.append("code", code);
+  params.append("redirect_uri", redirectUri);
+
+  const response = await axios.post(tokenEndpoint, params);
+  return response.data;
+}
+
+module.exports = {
+  exchangeAuthCode
+};
+
+// src/services/sessionService.js
+const redis = require("../lib/redis");
+
+const REDIS_ENABLED = process.env.REDIS_ENABLED === "true";
+const TTL    = 60;
+const PREFIX = "session";
+
+// In-memory fallback store (single instance, non-persistent)
+const memoryStore = new Map();
+
+async function storeSession(requestId, msisdn) {
+  const key   = `${PREFIX}:${requestId}`;
+  const value = JSON.stringify({ msisdn, createdAt: new Date().toISOString() });
+
+  if (REDIS_ENABLED) {
+    await redis.set(key, value, "EX", TTL);
+  } else {
+    memoryStore.set(key, value);
+    // Auto-expire from memory store
+    setTimeout(() => memoryStore.delete(key), TTL * 1000);
+  }
+  console.log(`[session] stored: ${key}`);
+}
+
+async function getSession(requestId) {
+  const key = `${PREFIX}:${requestId}`;
+
+  if (REDIS_ENABLED) {
+    const data = await redis.get(key);
+    if (!data) return null;
+    return JSON.parse(data);
+  } else {
+    const data = memoryStore.get(key);
+    if (!data) return null;
+    return JSON.parse(data);
+  }
+}
+
+async function deleteSession(requestId) {
+  const key = `${PREFIX}:${requestId}`;
+
+  if (REDIS_ENABLED) {
+    await redis.del(key);
+  } else {
+    memoryStore.delete(key);
+  }
+  console.log(`[session] deleted: ${key}`);
+}
+
+module.exports = { storeSession, getSession, deleteSession };
+
+// /src/app.js
+require("dotenv").config();
+
+const fastify = require("fastify")({ logger: true });
+
+const authRoutes = require("./routes/auth");
+const callbackRoutes = require("./routes/callback");
+
+const { PORT } = require("./config");
+
+fastify.register(authRoutes);
+fastify.register(callbackRoutes);
+
+fastify.get("/health", async (req, reply) => {
+  return { status: "ok" };
+});
+
+const start = async () => {
+  try {
+    await fastify.listen({ port: PORT, host: "0.0.0.0" });
+    console.log(`Auth service running on port ${PORT}`);
+  } catch (err) {
+    fastify.log.error(err);
+    process.exit(1);
+  }
+};
+
+start();
+
+
+// /src/config.js
+require("dotenv").config();
+
+module.exports = {
+  PORT:                process.env.PORT || 3000,
+  KEYCLOAK_URL:        process.env.KEYCLOAK_URL,          // internal: http://keycloak:8080
+  KEYCLOAK_PUBLIC_URL: process.env.KEYCLOAK_PUBLIC_URL    // browser:  http://localhost:8080
+                       || process.env.KEYCLOAK_URL,       // fallback to internal if not set
+  REALM:               process.env.REALM,
+  CLIENT_ID:           process.env.CLIENT_ID,
+  CLIENT_SECRET:       process.env.CLIENT_SECRET,
+  REDIS_URL:           process.env.REDIS_URL || "redis://:redis@redis:6379"
+};
+
+.env
+PORT=3000
+KEYCLOAK_URL=http://localhost:8080
+REALM=camara
+CLIENT_ID=camara-client
+CLIENT_SECRET=3moBzALtj5PPcaAipIdhenOQMNmoRtiv
+REDIS_URL=redis://:172.22.0.2@redis:6379
+REDIRECT_URI=http://localhost:3000/callback
+
+
+
+Dockerfile 
+# Use lightweight Node image
+FROM node:20-alpine
+
+# Create app directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install --production
+
+# Copy source code
+COPY . .
+
+# Expose port (will override in compose)
+EXPOSE 3000
+
+# Start app
+CMD ["node", "src/app.js"]
+
+docker-compose.yml
+
+services:
+   auth-service:
+    image: auth-srv:v8
+    container_name: auth-service
+    ports:
+      - "3000:3000"
+    
+    environment:
+      REDIS_HOST: 172.22.0.2
+      REDIS_ENABLED: "false" 
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: redis
+      KEYCLOAK_URL: http://keycloak:8080
+      KEYCLOAK_PUBLIC_URL: http://localhost:8080
+      REALM: camara
+      CLIENT_ID: camara-client
+      CLIENT_SECRET: qB7CzWGYO546oXpHGHceDK9dsoB3ecnR
+      REDIRECT_URI: http://localhost:3000/callback
+    restart: always
+    networks:
+      - camara-network
+
+networks:
+  camara-network:
+    external: true
+
+keycloak docker-compose.yaml
+
+version: "3.9"
+
+services:
+
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak
+    command: start-dev
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "8080:8080"
+    restart: always
+    networks:
+      - camara-network
+networks:
+  camara-network:
+    external: true
+       
+Redis docker-compose.yml
+
+services:
+  redis:
+    image: redis:7
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    command:
+      - redis-server
+      - --requirepass
+      - redis
+      - --appendonly
+      - yes
+      - --bind
+      - 0.0.0.0
+      - --protected-mode
+      - no
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "redis", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - camara-network
+
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: redisinsight
+    restart: always
+    ports:
+      - "8001:5540"
+    depends_on:
+      - redis
+    networks:
+      - camara-network
+
+networks:
+  camara-network:
+    external: true
+
+volumes:
+  redis_data:
+
+
+Auth Flow :
+
+1. Mobile App send request for auth code generate
+2. Telco Provider or MVNO add MSISDN in Header or TLS Packet
+3. Kong API Gateway recevied the request and send to 
+4. AuthServer (auth server validate the Partner, Partner subscription then request send to Keycloak
+5. keycloak Generate the Auth Code and Send to on Redirect URL
+6. Redirect URL (App backend Server )
+
+Token Flow 
+7. Appbackend server send token generation request with authcode 
+8. Request recevied on Kong or Gateway
+9. Kong request forward to Authserver 
+10. Auth Server validate authcode and send to Keycloak 
+11. Keycloak Generate the tocken and send to back
+12. TOken reviceived by App Backend Server 
+
+Number Verification : Verify Flow
+13. App Backend Server Send Number verify request with TOken and app registered MSISDN
+14. Kong request forward to Number verify
+15. Number Verification service : validate the Token with Auth service after validation
+16. Number Verify : Generated Auth Code and recevied request MSISDN are match then true and not match then send false
+
+
+Also required Database.
+
+So Kong, Keycloak, authserver and number verification store and get information from database. 
