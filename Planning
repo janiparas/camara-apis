@@ -1,0 +1,46 @@
+
+I am planning to Build Product  Camara APIs (approx 20 APIs) related.
+
+1. UI For Partner Creation 
+ a. When Partner Create that time, the automatic client and client secret create (scope in keycloak)
+ b.  Dashboard Partner wise for API uses
+  c. Dashboard All APIs use
+  d. partner information displayed on UI
+  e. Monetization (EveryMonth Bill Generate for Partner wise and send to email) & One Month Bill displayed on UI
+   f. Whne partner create that time notification send to Partner email ID
+   g. Partner Subscribe API that time scope add in Keycloak
+   h.  All API request and response displayed on UI base on date, partner, API filter
+
+I am Planning to use following component for this product build.
+1. Database : Postgres
+2. API Geteway: any support but start with Kong : postgres 
+3. Keycloak : Postgres
+4. Redis and Resid UI
+5. Auth Server TLS Packet read, I have Code so we will use Python or we can use Python code for auth Code generate and js for Token generate and validation
+6. ELK with OpenTelematory
+7. Prometheus and Grafana 
+
+Auth Code Flow (method GET)
+Mobile App Send request for auth code Generate --> 5GCore or 4GCore request will be received and add MSISDN in Header Or TLS Packet (header Enrichment)  --> Kong --> Auth Server (Auth server read the Header Enrichment and store MSISDN) --Keycloak (Generate the Auth Code MSISDN and Client Base ) -- Response to Auth server --> Response Redirect to App backend Server
+
+Token Generation Flow (Method POST)
+App Backend Server send request token generation with Auth Code --> Kong --> AuthServer (Auth Code One time and time base accessible)  If authCode Note expired or not used then request send --> Keycloak (Generate the token) --> auth server stored --> response to kong --> App Backend Server 
+
+Number Verification Verify Flow (Method POST)
+App Backend Server send number verification verify  with Token --> Kong --> Number verification --> validate the token with Auth server (If token are validate) and MSIDN match then response is true, else false --> Kong --> App Backend Server 
+
+
+Number Verification Verify Flow (Method POST)
+App Backend Server send number verification verify  with Token --> Kong --> Number verification --> validate the token with Auth server (If token are validate) and MSIDN match then response is true, else false --> Kong --> App Backend Server 
+
+
+Number Verification Device Get Phone Number Flow (Method GET)
+App Backend Server send number verification Get Phone number with Token --> Kong --> Number verification --> validate the token with Auth server (If token are validate) and  thatMSIDN response to  --> Kong --> App Backend Server 
+
+1st i'll prepare product and test in Daemon base then convert in to docker then we can use in Kubernetes. 
+
+following start with container like Kong,keycloak, redis, redis ui
+
+If possibel single container for Auth Server with Python and js (token generate and validation) or we can use two container one for python and one for js.
+
+

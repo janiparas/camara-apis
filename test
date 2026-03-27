@@ -87,7 +87,7 @@ const Redis = require("ioredis");
 const REDIS_ENABLED = process.env.REDIS_ENABLED === "true";
 
 if (!REDIS_ENABLED) {
-  console.warn("[redis] disabled via REDIS_ENABLED=false — using no-op client");
+  console.warn("[redis] disabled via REDIS_ENABLED=false  using noop client - test:90");
 }
 
 // No-op client — mimics ioredis API but does nothing
@@ -110,24 +110,24 @@ if (!REDIS_ENABLED) {
     maxRetriesPerRequest: 3,
     retryStrategy(times) {
       if (times > 10) {
-        console.error("[redis] max retries reached — giving up");
+        console.error("[redis] max retries reached  giving up - test:113");
         return null;
       }
       const delay = Math.min(times * 200, 3000);
-      console.warn(`[redis] retrying in ${delay}ms (attempt ${times})`);
+      console.warn(`[redis] retrying in ${delay}ms (attempt ${times}) - test:117`);
       return delay;
     },
     reconnectOnError(err) {
-      console.error("[redis] reconnect on error:", err.message);
+      console.error("[redis] reconnect on error: - test:121", err.message);
       return true;
     }
   });
 
-  redis.on("connect",     () => console.log("[redis] connected successfully"));
-  redis.on("ready",       () => console.log("[redis] ready"));
-  redis.on("error",       (err) => console.error("[redis] error:", err.message));
-  redis.on("close",       () => console.warn("[redis] connection closed"));
-  redis.on("reconnecting",() => console.warn("[redis] reconnecting..."));
+  redis.on("connect - test:126",     () => console.log("[redis] connected successfully"));
+  redis.on("ready - test:127",       () => console.log("[redis] ready"));
+  redis.on("error - test:128",       (err) => console.error("[redis] error:", err.message));
+  redis.on("close - test:129",       () => console.warn("[redis] connection closed"));
+  redis.on("reconnecting - test:130",() => console.warn("[redis] reconnecting..."));
 
   module.exports = redis;
 }
@@ -157,7 +157,7 @@ async function routes(fastify, options) {
     }
 
     const requestId = uuidv4();
-    console.log(`[authorize] requestId=${requestId} msisdn=${msisdn}`);
+    console.log(`[authorize] requestId=${requestId} msisdn=${msisdn} - test:160`);
     await storeSession(requestId, msisdn);
 
     // KEYCLOAK_PUBLIC_URL  → browser-resolvable (localhost:8080)
@@ -175,11 +175,11 @@ async function routes(fastify, options) {
       `&prompt=login`
     ].join("");
 
-    console.log(`[authorize] redirecting browser to: ${authUrl}`);
+    console.log(`[authorize] redirecting browser to: ${authUrl} - test:178`);
     return reply.redirect(authUrl);
 
   } catch (err) {
-    console.error("[authorize] error:", err.message);
+    console.error("[authorize] error: - test:182", err.message);
     return reply.code(500).send({ error: "internal_error", message: err.message });
   }
 });
@@ -216,15 +216,15 @@ async function routes(fastify, options) {
           "EX",
           tokenData.expires_in || 300
         );
-        console.log(`[token] mapped access_token to msisdn=${msisdn}`);
+        console.log(`[token] mapped access_token to msisdn=${msisdn} - test:219`);
       } else {
-        console.warn("[token] msisdn not provided — token→MSISDN mapping skipped");
+        console.warn("[token] msisdn not provided  token→MSISDN mapping skipped - test:221");
       }
 
       return reply.send(tokenData);
 
     } catch (err) {
-      console.error("[token] error:", err.response?.data || err.message);
+      console.error("[token] error: - test:227", err.response?.data || err.message);
       return reply.code(500).send({
         error: "token_exchange_failed",
         message: err.response?.data || err.message
@@ -252,7 +252,7 @@ module.exports = async function (fastify, opts) {
 
       // Handle Keycloak-side errors (e.g. user cancelled login)
       if (error) {
-        console.error(`[callback] keycloak error: ${error} — ${error_description}`);
+        console.error(`[callback] keycloak error: ${error}  ${error_description} - test:255`);
         return reply.code(400).send({
           error,
           message: error_description || "Authorization failed"
@@ -266,13 +266,13 @@ module.exports = async function (fastify, opts) {
         });
       }
 
-      console.log(`[callback] received code, state=${state}`);
+      console.log(`[callback] received code, state=${state} - test:269`);
 
       // Retrieve MSISDN bound to this state
       const session = await getSession(state);
 
       if (!session) {
-        console.error(`[callback] session not found or expired for state=${state}`);
+        console.error(`[callback] session not found or expired for state=${state} - test:275`);
         return reply.code(400).send({
           error: "session_expired",
           message: "Session expired or invalid state — restart the auth flow"
@@ -280,12 +280,12 @@ module.exports = async function (fastify, opts) {
       }
 
       const { msisdn } = session;
-      console.log(`[callback] session found, msisdn=${msisdn}`);
+      console.log(`[callback] session found, msisdn=${msisdn} - test:283`);
 
       // Exchange auth code for tokens via keycloakService (single source of truth)
       const tokenData = await exchangeAuthCode(code, process.env.REDIRECT_URI);
 
-      console.log(`[callback] token exchange successful`);
+      console.log(`[callback] token exchange successful - test:288`);
 
       // Bind access_token → MSISDN in Redis (consumed by number verification service)
       await redis.set(
@@ -298,11 +298,11 @@ module.exports = async function (fastify, opts) {
         tokenData.expires_in || 300
       );
 
-      console.log(`[callback] token→MSISDN mapped, msisdn=${msisdn}`);
+      console.log(`[callback] token→MSISDN mapped, msisdn=${msisdn} - test:301`);
 
       // Clean up session — no longer needed
       await deleteSession(state);
-      console.log(`[callback] session deleted, state=${state}`);
+      console.log(`[callback] session deleted, state=${state} - test:305`);
 
       return reply.send({
         access_token: tokenData.access_token,
@@ -313,7 +313,7 @@ module.exports = async function (fastify, opts) {
       });
 
     } catch (err) {
-      console.error("[callback] error:", err.response?.data || err.message);
+      console.error("[callback] error: - test:316", err.response?.data || err.message);
       return reply.code(500).send({
         error: "callback_failed",
         message: err.response?.data || err.message
@@ -366,7 +366,7 @@ async function storeSession(requestId, msisdn) {
     // Auto-expire from memory store
     setTimeout(() => memoryStore.delete(key), TTL * 1000);
   }
-  console.log(`[session] stored: ${key}`);
+  console.log(`[session] stored: ${key} - test:369`);
 }
 
 async function getSession(requestId) {
@@ -391,7 +391,7 @@ async function deleteSession(requestId) {
   } else {
     memoryStore.delete(key);
   }
-  console.log(`[session] deleted: ${key}`);
+  console.log(`[session] deleted: ${key} - test:394`);
 }
 
 module.exports = { storeSession, getSession, deleteSession };
@@ -416,7 +416,7 @@ fastify.get("/health", async (req, reply) => {
 const start = async () => {
   try {
     await fastify.listen({ port: PORT, host: "0.0.0.0" });
-    console.log(`Auth service running on port ${PORT}`);
+    console.log(`Auth service running on port ${PORT} - test:419`);
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);
@@ -600,3 +600,49 @@ Number Verification : Verify Flow
 Also required Database.
 
 So Kong, Keycloak, authserver and number verification store and get information from database. 
+
+
+I am planning to Build Product  Camara APIs (approx 20 APIs) related.
+
+1. UI For Partner Creation 
+ a. When Partner Create that time, the automatic client and client secret create (scope in keycloak)
+ b.  Dashboard Partner wise for API uses
+  c. Dashboard All APIs use
+  d. partner information displayed on UI
+  e. Monetization (EveryMonth Bill Generate for Partner wise and send to email) & One Month Bill displayed on UI
+   f. Whne partner create that time notification send to Partner email ID
+   g. Partner Subscribe API that time scope add in Keycloak
+   h.  All API request and response displayed on UI base on date, partner, API filter
+
+I am Planning to use following component for this product build.
+1. Database : Postgres
+2. API Geteway: any support but start with Kong : postgres 
+3. Keycloak : Postgres
+4. Redis and Resid UI
+5. Auth Server TLS Packet read, I have Code so we will use Python or we can use Python code for auth Code generate and js for Token generate and validation
+6. ELK with OpenTelematory
+7. Prometheus and Grafana 
+
+Auth Code Flow (method GET)
+Mobile App Send request for auth code Generate --> 5GCore or 4GCore request will be received and add MSISDN in Header Or TLS Packet (header Enrichment)  --> Kong --> Auth Server (Auth server read the Header Enrichment and store MSISDN) --Keycloak (Generate the Auth Code MSISDN and Client Base ) -- Response to Auth server --> Response Redirect to App backend Server
+
+Token Generation Flow (Method POST)
+App Backend Server send request token generation with Auth Code --> Kong --> AuthServer (Auth Code One time and time base accessible)  If authCode Note expired or not used then request send --> Keycloak (Generate the token) --> auth server stored --> response to kong --> App Backend Server 
+
+Number Verification Verify Flow (Method POST)
+App Backend Server send number verification verify  with Token --> Kong --> Number verification --> validate the token with Auth server (If token are validate) and MSIDN match then response is true, else false --> Kong --> App Backend Server 
+
+
+Number Verification Verify Flow (Method POST)
+App Backend Server send number verification verify  with Token --> Kong --> Number verification --> validate the token with Auth server (If token are validate) and MSIDN match then response is true, else false --> Kong --> App Backend Server 
+
+
+Number Verification Device Get Phone Number Flow (Method GET)
+App Backend Server send number verification Get Phone number with Token --> Kong --> Number verification --> validate the token with Auth server (If token are validate) and  thatMSIDN response to  --> Kong --> App Backend Server 
+
+1st i'll prepare product and test in Daemon base then convert in to docker then we can use in Kubernetes. 
+
+following start with container like Kong,keycloak, redis, redis ui
+
+If possibel single container for Auth Server with Python and js (token generate and validation) or we can use two container one for python and one for js.
+
