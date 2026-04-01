@@ -1,0 +1,32 @@
+docker exec -it postgres psql -U admin
+
+keycloak:
+
+CREATE DATABASE keycloak_db OWNER keycloak;
+CREATE USER keycloak WITH PASSWORD 'keycloak';
+
+GRANT ALL PRIVILEGES ON DATABASE keycloak_db TO keycloak;
+\c keycloak_db
+GRANT ALL ON SCHEMA public TO keycloak;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO keycloak;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO keycloak;
+ALTER SCHEMA public OWNER TO keycloak;
+
+
+Kong:
+
+CREATE DATABASE kong_db OWNER kong;
+CREATE USER kong WITH PASSWORD 'kong';
+GRANT ALL PRIVILEGES ON DATABASE kong_db TO kong;
+\c kong_db
+GRANT ALL ON SCHEMA public TO kong;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO kong;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO kong;
+ALTER SCHEMA public OWNER TO kong;
+
+Platform:
+
+CREATE DATABASE platform_db OWNER platform;
+CREATE USER platform WITH PASSWORD 'platform';
+GRANT ALL PRIVILEGES ON DATABASE platform_db TO platform;
+

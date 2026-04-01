@@ -1,0 +1,111 @@
+STEP 1 — Keycloak Setup (DO THIS FIRST)
+
+http://localhost:8080
+username: admin
+PASSWORD: admin
+
+1. Create Realm
+Go to Realm dropdown
+Click Create Realm
+Name: 
+
+camara-platform
+
+2. Create Client (Partner)
+Clients → Create
+
+| Field       | Value          |
+| ----------- | -------------- |
+| Client ID   | `camara-platform`  |
+| Client Type | OpenID Connect |
+| Access Type | Confidential   |
+
+Enable Flows
+
+Inside client:
+Authentication flow --> ON
+✔ Standard Flow (Authorization Code) → ON
+✔ Direct Access → ON
+OAuth 2.0 Device Authorization Grant
+OIDC CIBA Grant
+Client authentication --> ON
+Authorization--> ON
+
+Get Client Secret
+
+Go to: Credentials tab
+Copy:
+client_id
+client_secret
+
+3. Set Redirect URL
+
+Example: http://localhost:3000/callback
+
+4. Create Scope (API Access)
+
+Go to:  Client Scopes → Create 
+Example: nv.verify
+nv.read
+
+5. Add Custom Claim (MSISDN Placeholder)
+
+Go to: Client → Mappers → Create
+
+| Field            | Value          |
+| ---------------- | -------------- |
+| Name             | msisdn         |
+| Mapper Type      | User Attribute |
+| User Attribute   | msisdn         |
+| Token Claim Name | msisdn         |
+
+
+KONG:
+
+Now test Kong is working.
+
+1. Add Test Service
+
+curl -i -X POST http://localhost:8001/services \
+  --data "name=test-service" \
+  --data "url=https://httpbin.org"
+
+2. Add Route
+
+curl -i -X POST http://localhost:8001/services/test-service/routes \
+  --data "paths[]=/test"
+
+3. Test
+
+curl http://localhost:8000/test/get
+
+If working → Kong is correct ✅
+
+
+STEP 4 — Connect RedisInsight
+
+Open:
+
+http://localhost:5540
+
+| Field    | Value           |
+| -------- | --------------- |
+| Host     | `redis`         |
+| Port     | `6379`          |
+| Password | 'redis' |
+
+
+CURRENT STATUS CHECKLIST
+
+| Component    | Status    |
+| ------------ | --------- |
+| PostgreSQL   | ✅ Running |
+| Kong         | ✅ Healthy |
+| Keycloak     | ✅ Running |
+| Redis        | ✅ Running |
+| RedisInsight | ✅ Running |
+
+
+You’re now ready for real API integration
+
+

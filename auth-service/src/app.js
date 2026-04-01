@@ -1,4 +1,4 @@
-// /src/app.js
+// /auth-service/src/app.js
 require("dotenv").config();
 
 const fastify = require("fastify")({ logger: true });

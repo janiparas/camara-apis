@@ -14,7 +14,7 @@ RUN npm install --production
 COPY . .
 
 # Expose port (will override in compose)
-EXPOSE 3000
+EXPOSE 9091
 
 # Start app
 CMD ["node", "src/app.js"]

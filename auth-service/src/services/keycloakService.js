@@ -1,4 +1,3 @@
-// src/services/keycloakService.js
 const axios = require("axios");
 const { KEYCLOAK_URL, REALM, CLIENT_ID, CLIENT_SECRET } = require("../config");
 
@@ -17,5 +16,5 @@ async function exchangeAuthCode(code, redirectUri) {
 }
 
 module.exports = {
-  exchangeAuthCode
+  exchangeAuthCode,
 };

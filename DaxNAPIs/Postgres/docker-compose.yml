@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - platform-network
+
+volumes:
+  pg_data:
+
+networks:
+  platform-network:
+    external: true

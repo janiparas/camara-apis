@@ -3,7 +3,7 @@ services:
   # 📱 Number Verification Service
   number-verification:
    # build: ./number-verification-service
-    image: number-verification-service:latest
+    image: number-verification-srv:v2
     container_name: number-verification
     ports:
       - "9091:9091"
@@ -12,8 +12,9 @@ services:
     
     restart: always
     networks:
-      - camara-network
+      - platform-network
+
 networks:
-  camara-network:
-    external: true       
+  platform-network:
+    external: true     
 

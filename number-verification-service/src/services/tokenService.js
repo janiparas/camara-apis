@@ -1,26 +1,20 @@
-// src/services/tokenService.js
-const axios = require("axios");
-const { KEYCLOAK_URL, REALM } = require("../config");
+const jwt = require("jsonwebtoken");
 
 async function validateToken(token) {
   try {
-    const res = await axios.post(
-      `${KEYCLOAK_URL}/realms/${REALM}/protocol/openid-connect/token/introspect`,
-      new URLSearchParams({
-        token: token,
-        client_id: process.env.CLIENT_ID,
-        client_secret: process.env.CLIENT_SECRET
-      }),
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        }
-      }
-    );
+    const decoded = jwt.decode(token);
 
-    return res.data;
+    if (!decoded) {
+      return { active: false };
+    }
+
+    return {
+      active: true,
+      ...decoded
+    };
   } catch (err) {
-    throw new Error("Token validation failed");
+    console.error("❌ Token decode failed:", err.message);
+    return { active: false };
   }
 }
 

@@ -1,0 +1,37 @@
+version: '3.9'
+
+services:
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    command:
+      - redis-server
+      - --requirepass
+      - redis
+      - --appendonly
+      - yes
+    volumes:
+      - redis_data:/data
+    networks:
+      - platform-network
+
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: redisinsight
+    ports:
+      - "5540:5540"
+    volumes:
+      - redisinsight_data:/data
+    networks:
+      - platform-network
+
+volumes:
+  redisinsight_data:
+  redis_data:
+
+networks:
+  platform-network:
+    external: true

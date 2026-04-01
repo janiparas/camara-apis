@@ -27,18 +27,20 @@ async function routes(fastify, options) {
 
     // KEYCLOAK_PUBLIC_URL  → browser-resolvable (localhost:8080)
     // KEYCLOAK_URL         → internal Docker hostname (keycloak:8080)
-    const publicBase = process.env.KEYCLOAK_PUBLIC_URL || process.env.KEYCLOAK_URL;
+    const { KEYCLOAK_PUBLIC_URL, KEYCLOAK_URL, REALM, CLIENT_ID, REDIRECT_URI } = require("../config");
+
+     const publicBase = KEYCLOAK_PUBLIC_URL || KEYCLOAK_URL;
 
     const authUrl = [
-      `${publicBase}/realms/${process.env.REALM}`,
-      `/protocol/openid-connect/auth`,
-      `?client_id=${process.env.CLIENT_ID}`,
-      `&response_type=code`,
-      `&redirect_uri=${encodeURIComponent(process.env.REDIRECT_URI)}`,
-      `&scope=openid`,
-      `&state=${requestId}`,
-      `&prompt=login`
-    ].join("");
+  `${publicBase}/realms/${REALM}`,
+  `/protocol/openid-connect/auth`,
+  `?client_id=${CLIENT_ID}`,
+  `&response_type=code`,
+  `&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`,
+  `&scope=openid`,
+  `&state=${requestId}`,
+  `&prompt=login`
+].join("");
 
     console.log(`[authorize] redirecting browser to: ${authUrl}`);
     return reply.redirect(authUrl);

@@ -1,3 +1,4 @@
+//auth-service/src/lib/redis.js
 const Redis = require("ioredis");
 
 const REDIS_ENABLED = process.env.REDIS_ENABLED === "true";

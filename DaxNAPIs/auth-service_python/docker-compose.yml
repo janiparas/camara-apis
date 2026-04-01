@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  auth-service:
+    image: auth-srv:v1
+    container_name: auth-service
+    restart: always
+    ports:
+      - "9000:9000"
+    environment:
+      KEYCLOAK_URL: http://keycloak:8080
+      KEYCLOAK_REALM: camara-platform
+      CLIENT_ID: 4ddd932c-f4f5-4d46-950e-86a6a3344984
+      CLIENT_SECRET: Qs6KyAR1KQSQW7TynoHMyniLVO4GTr56
+      REDIS_HOST: redis
+      REDIS_PASSWORD: redis
+      REDIRECT_URI: http://localhost:9000/callback
+      SESSION_TTL: 300
+      LOG_LEVEL: DEBUG
+    networks:
+      - platform-network
+
+networks:
+  platform-network:
+    external: true
